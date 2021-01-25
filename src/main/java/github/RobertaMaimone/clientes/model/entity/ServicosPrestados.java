@@ -2,12 +2,15 @@ package github.RobertaMaimone.clientes.model.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-public class Servicos {
+public class ServicosPrestados {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +26,18 @@ public class Servicos {
     @Column
     private BigDecimal valor;
 
-    public Servicos() {}
+    @Column
+    @JsonFormat(pattern = "dd/MM/yyy")
+    private LocalDate data;
 
-    public Servicos(Integer id, String descricao, Cliente cliente, BigDecimal valor) {
+    public ServicosPrestados(){}
+
+    public ServicosPrestados(Integer id, String descricao, Cliente cliente, BigDecimal valor, LocalDate data) {
         this.id = id;
         this.descricao = descricao;
         this.cliente = cliente;
         this.valor = valor;
+        this.data = data;
     }
 
     public Integer getId() {
@@ -64,12 +72,20 @@ public class Servicos {
         this.valor = valor;
     }
 
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Servicos servicos = (Servicos) o;
-        return id.equals(servicos.id);
+        ServicosPrestados that = (ServicosPrestados) o;
+        return id.equals(that.id);
     }
 
     @Override
@@ -79,12 +95,12 @@ public class Servicos {
 
     @Override
     public String toString() {
-        return "Servicos{" +
+        return "ServicosPrestados{" +
                 "id=" + id +
                 ", descricao='" + descricao + '\'' +
                 ", cliente=" + cliente +
                 ", valor=" + valor +
+                ", data=" + data +
                 '}';
     }
-
 }
